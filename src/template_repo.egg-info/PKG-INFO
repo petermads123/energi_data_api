@@ -1,0 +1,34 @@
+Metadata-Version: 2.4
+Name: template_repo
+Version: 0.1.0
+Summary: A short description of your project.
+Author-email: Your Name <you@example.com>
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: pandas
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: pydocstyle; extra == "dev"
+
+# template_repo
+This is a template repo for creating new projects
+
+## Setup
+1. To setup this repo first choose a name within the pyproject.toml file under project and in environment.yaml name the environment to be build when developing the code
+2. Define dependencies withing pyproject.toml
+3. Make sure ruff is installed in your vscode
+- In settings.json have the following lines pasted:
+    "python.linting.enabled": true,
+    "editor.defaultFormatter": "charliermarsh.ruff", 
+    "editor.formatOnSave": true,
+    "ruff.lint.enable": true,
+    "ruff.format.enable": true
+4. If on windows make sure "make" is installed in the base environment using "conda install -c conda-forge make"
+- Restart your terminal
+4. Run "make setup" in the terminal to create/update the environment with all dependencies automatically installed
+
+## Updating
+Whenever you need to update the packages, run "make setup"
+Environment can be activated by "conda activate <env_name>" or by using the environment menu in the bottum left corner (vscode)
