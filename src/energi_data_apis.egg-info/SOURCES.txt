@@ -1,0 +1,10 @@
+README.md
+pyproject.toml
+src/energi_data_apis.egg-info/PKG-INFO
+src/energi_data_apis.egg-info/SOURCES.txt
+src/energi_data_apis.egg-info/dependency_links.txt
+src/energi_data_apis.egg-info/requires.txt
+src/energi_data_apis.egg-info/top_level.txt
+src/spot_prices/__init__.py
+src/spot_prices/energidataservice.py
+tests/test.py

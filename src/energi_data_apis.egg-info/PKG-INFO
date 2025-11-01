@@ -1,0 +1,34 @@
+Metadata-Version: 2.4
+Name: energi_data_apis
+Version: 0.1.0
+Summary: APIs for collecting data from energidataservice and eloverblik
+Author-email: Peter Mads Pedersen <petermads123@hotmail.com>
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: requests
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: pydocstyle; extra == "dev"
+
+# Energi Data APIs
+This repo is for implementing various APIs for getting data from energidataservice, eloverblik etc.
+
+## Development setup
+### First time setup
+1. Make sure ruff is installed in your vscode
+- In settings.json have the following lines pasted:
+    "python.linting.enabled": true,
+    "editor.defaultFormatter": "charliermarsh.ruff", 
+    "editor.formatOnSave": true,
+    "ruff.lint.enable": true,
+    "ruff.format.enable": true
+2. If on windows make sure "make" is installed in the base environment using "conda install -c conda-forge make"
+- Restart your terminal
+3. Run "make setup" in the terminal to create/update the environment with all dependencies automatically installed
+
+### Updating environment
+Whenever you need to update the packages, run "make setup"
+Environment can be activated by "conda activate <env_name>" or by using the environment menu in the bottom left corner (vscode)

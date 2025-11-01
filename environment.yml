@@ -1,4 +1,4 @@
-name: template_repo
+name: energi_data_apis
 channels:
   - conda-forge
   - gurobi

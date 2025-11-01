@@ -1,7 +1,7 @@
 # Makefile for myproject
 
 # Default environment name
-ENV_NAME = template_repo
+ENV_NAME = energi_data_apis
 
 .PHONY: setup update lint format test clean
 

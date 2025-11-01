@@ -3,11 +3,11 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "template_repo"
+name = "energi_data_apis"
 version = "0.1.0"
-description = "A short description of your project."
+description = "APIs for collecting data from energidataservice and eloverblik"
 authors = [
-  { name = "Your Name", email = "you@example.com" }
+  { name = "Peter Mads Pedersen", email = "petermads123@hotmail.com" }
 ]
 readme = "README.md"
 requires-python = ">=3.13"
@@ -16,6 +16,7 @@ requires-python = ">=3.13"
 dependencies = [
   "numpy",
   "pandas",
+  "requests",
 ]
 
 # Optional groups (e.g. dev dependencies)
@@ -32,7 +33,7 @@ where = ["src"]
 # --- Ruff Configuration ---
 [tool.ruff]
 line-length = 88
-select = ["E" "W", "I", "F", "B", "ANN", "D", "UP", "TID", "N", "SIM", "ARG", "ERA", "DTZ"]
+select = ["E", "W", "I", "F", "B", "ANN", "D", "UP", "TID", "N", "SIM", "ARG", "ERA", "DTZ"]
 ignore = ["E501", "ANN101", "N806", "N803"]
 target-version = "py313"
 
