@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "energi_data_apis"
+name = "energi_data_api"
 version = "0.1.0"
-description = "APIs for collecting data from energidataservice and eloverblik"
+description = "APIs for collecting energi data from various sources"
 authors = [
   { name = "Peter Mads Pedersen", email = "petermads123@hotmail.com" }
 ]
@@ -17,6 +17,7 @@ dependencies = [
   "numpy",
   "pandas",
   "requests",
+  "xmltodict",
 ]
 
 # Optional groups (e.g. dev dependencies)
@@ -28,7 +29,7 @@ dev = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
 
 # --- Ruff Configuration ---
 [tool.ruff]
@@ -44,3 +45,8 @@ convention = "google"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-v"
+
+# --- Mypy configuration ---
+[tool.mypy]
+ignore_missing_imports = true
+follow_untyped_imports = true

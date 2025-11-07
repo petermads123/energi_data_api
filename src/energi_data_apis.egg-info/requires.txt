@@ -1,8 +1,0 @@
-numpy
-pandas
-requests
-
-[dev]
-pytest
-ruff
-pydocstyle

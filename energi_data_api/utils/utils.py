@@ -11,12 +11,12 @@ def fix_tz(
     """Convert a string or pandas time object to a different timezone.
 
     Args:
-        time: A string, pandas Timestamp, Series, or DatetimeIndex.
-        tz_from: The timezone of the input time if tz-naive. Default is 'UTC'.
-        tz_to: The target timezone. Default is 'UTC'.
+        time (str | pd.Timestamp | pd.Series | pd.DatetimeIndex): A string, pandas Timestamp, Series, or DatetimeIndex.
+        tz_from (str): The timezone of the input time if tz-naive. Default is 'UTC'.
+        tz_to (str): The target timezone. Default is 'UTC'.
 
     Returns:
-        The input time object converted to the target timezone. String input will be converted to pandas timestamp.
+        pd.Timestamp | pd.Series | pd.DatetimeIndex: The input time object converted to the target timezone. String input will be converted to pandas timestamp.
     """
     # Convert string to pandas Timestamp
     if isinstance(time, str):
@@ -37,7 +37,7 @@ def fix_tz(
         )
     else:
         raise TypeError(
-            "Input must be a  string, pandas Timestamp, Series, or DatetimeIndex."
+            "Input must be a string, pandas Timestamp, Series, or DatetimeIndex."
         )
 
 

@@ -1,6 +1,7 @@
 """Wrappers for functions."""
 
 import time
+from collections.abc import Callable
 from functools import wraps
 from typing import Any
 
@@ -9,7 +10,7 @@ import requests
 
 def retry(
     max_retries: int = 3, delay: float = 1, rate_limit_delay: float = 60
-) -> callable:
+) -> Callable:
     """A wrapper that retries a function.
 
     Note:
@@ -22,12 +23,12 @@ def retry(
         rate_limit_delay (float): Delay in seconds for rate limiting. Default is 60 (1 minute).
 
     Returns:
-        callable: The decorated function with retry logic.
+        Callable: The decorated function with retry logic.
     """
 
-    def decorator(func: callable) -> callable:
+    def decorator(func: Callable) -> Callable:
         @wraps(func)  # Preserves func metadata
-        def wrapper(*args: tuple[Any], **kwargs: dict[str, Any]) -> callable:
+        def wrapper(*args: tuple[Any], **kwargs: dict[str, Any]) -> Callable:
             # Running through attempts
             for attempt in range(1, max_retries + 1):
                 # Try to call the function
@@ -69,6 +70,10 @@ def retry(
                     else:
                         print("Max retries reached. Raising exception.")
                         raise
+
+            raise RuntimeError(
+                "Retry decorator exhausted without returning or raising."
+            )
 
         return wrapper
 
