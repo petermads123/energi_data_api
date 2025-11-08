@@ -37,16 +37,16 @@ class EnergiDataServiceAPI(GenericAPI):
 
         if start is not None:
             # If end is None make end one day after start
-            start = fix_tz(start, tz_from=tz, tz_to=tz)
+            start_fixed = fix_tz(start, tz_from=tz, tz_to=tz)
             # If end is None, set to start + 1 day (tz-aware. Can result in 92/96/100 timesteps due to DST)
-            end = (
-                (start + pd.DateOffset(days=1))
+            end_fixed = (
+                (start_fixed + pd.DateOffset(days=1))
                 if end is None
                 else fix_tz(end, tz_from=tz, tz_to=tz)
             )
 
-            self.start = fix_tz(start)
-            self.end = fix_tz(end)
+            self.start = fix_tz(start_fixed)
+            self.end = fix_tz(end_fixed)
             self.tz = tz
 
             self.params["start"] = self.start.strftime("%Y-%m-%dT%H:%M")
@@ -178,8 +178,8 @@ def get_dso_tariffs(
     start: str | pd.Timestamp,
     end: str | pd.Timestamp | None = None,
     tz: str = "CET",
-    dso: str | list[str] | None = None,
-    tariff: str | list[str] | None = None,
+    dso: str | list[str] = "Radius Elnet A/S",
+    tariff: str | list[str] = "Nettarif C",
 ) -> pd.DataFrame:
     """Get DSO tariffs for specified DSOs.
 
@@ -194,8 +194,8 @@ def get_dso_tariffs(
         start (str | pd.Timestamp): The start date/time.
         end (str | pd.Timestamp | None, Optional): The end date/time. Default is None.
         tz (str, Optional): The time zone to assume the input dates have. Default is "CET".
-        dso (str | list[str] | None, Optional): The DSO(s) to filter by. Default is None.
-        tariff (str | list[str] | None, Optional): The tariff(s) to filter by. Default is None.
+        dso (str | list[str]): The DSO(s) to filter by. Default is "Radius Elnet A/S".
+        tariff (str | list[str]): The tariff(s) to filter by. Default is "Nettarif C".
 
     Returns:
         pd.DataFrame: ["UTC", "CET", "DSO", "TariffDKK"]
@@ -233,11 +233,30 @@ def get_dso_tariffs(
         inclusive="left",
     )
 
-    df = pd.DataFrame({"CET": date_range})
+    prices = []
+    for dso_ in dso:
+        for tariff_ in tariff:
+            prices.append(f"{dso_}_{tariff_}")
 
-    raise NotImplementedError("This function is not yet implemented completely.")
+    df = pd.DataFrame(columns=["CET"] + prices)
+    df["CET"] = date_range
 
-    return date_range
+    def _set_tariff(row: pd.Series) -> pd.Series:
+        for dso_ in dso:
+            for tariff_ in tariff:
+                cet = row["CET"]
+                value = df_tariffs.loc[
+                    (df_tariffs["FromDate"] <= cet)
+                    & (df_tariffs["ToDate"] > cet)
+                    & (df_tariffs["ChargeOwner"] == dso_)
+                    & (df_tariffs["Note"] == tariff_),
+                ][f"Price{cet.hour}"]
+                row[f"{dso_}_{tariff_}"] = value.values[0] if not value.empty else None
+        return row
+
+    df = df.apply(_set_tariff, axis=1)
+
+    return df
 
 
 # Testing
